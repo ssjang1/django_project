@@ -33,7 +33,7 @@
 
         #board {
 	        background: transparent url("/static/img/back.gif") no-repeat center top ;
-	        background-size : 750px;
+	        background-size : 850px;
         }
 
         #scoreboard {
@@ -205,7 +205,7 @@ label[for="guess"] {
             {% csrf_token %}
             <br>
             <label for="guess">숫자 4개를 입력하세요</label>
-            <input type="text" name="guess" id="guess" maxlength="4" pattern="[0-9]{4}" required oninput="checkDuplicate()">
+            <input type="text" name="guess" id="guess" maxlength="4" pattern="[0-9]{4}" required oninput="checkDuplicate()" autocomplete="off">
             <div id="warning"></div>
             <input type="submit" value="제출">
             <input type="button" onclick="location.href='{% url 'baseball:game' %}'" value="초기화">
