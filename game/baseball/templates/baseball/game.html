@@ -81,14 +81,65 @@
 
         #col1 {
             width: 33%;
+            color: #ffffff;
+            font-weight : bold;
         }
         #col2 {
             width: 33%;
+            color: #ffffff;
+            font-weight : bold;
+
         }
         #col3 {
             display: flex;
             width: 33%;
+            color: #ffffff;
+            font-weight : bold;
+
         }
+input[type="submit"],
+input[type="button"] {
+  background-color: #4CAF50; /* 배경색 */
+  border: none; /* 테두리 없애기 */
+  color: white; /* 글자색 */
+  padding: 5px 10px; /* 내부 여백 */
+  text-align: center; /* 가운데 정렬 */
+  text-decoration: none; /* 밑줄 없애기 */
+  display: inline-block;
+  font-size: 15px; /* 글자 크기 */
+  margin: 8px 2px; /* 외부 여백 */
+  cursor: pointer; /* 마우스 커서 모양 */
+  border-radius: 5px; /* 모서리 둥글게 */
+  box-shadow: 2px 2px #888888; /* 그림자 */
+}
+
+input[type="submit"]:hover,
+input[type="button"]:hover {
+  background-color: #3e8e41; /* 호버 배경색 */
+}
+
+label[for="guess"] {
+  font-size: 14px; /* 글자 크기 */
+  font-weight: bold; /* 글자 굵기 */
+  margin-right: 5px; /* 오른쪽 여백 */
+}
+#guess {
+  padding: 10px; /* 내부 여백 */
+  font-size: 14px; /* 글자 크기 */
+  border-radius: 15px; /* 모서리 둥글게 */
+  border: 1px solid #ccc; /* 테두리 */
+}
+#guess:focus {
+  box-shadow: inset 0 1px 3px #ddd, 0 0 8px #5b9ef5; /* 초점 시 그림자 */
+  outline: none; /* 초점 시 아웃라인 제거 */
+}
+
+.result2{
+  color: #ffffff;
+  margin: 5px;
+  font-size: 16px; /* 글자 크기 */
+  font-weight: bold; /* 글자 굵기 */
+}
 
     </style>
     {% endblock stylesheet %}
@@ -97,14 +148,14 @@
 
 <div id="board" >
 <br>
-<br>
-<h1 > 야구 전광판 </h1>
-    <br> {{ result.count }}회
-    <br> [{{ result.number }}]
+<h1 >  <img src="{% static 'img/yagu.png' %}" width="18%"> </h1>
+    <br>
+    <p class="result2">{{ result.count }}회</p>
+    <p class="result2">[{{ result.number }}]</p>
 
     <table class="show_board" align="center">
         <tr>
-            <td id="col1"> 스트라이크 </td>
+            <td id="col1"> <img src="{% static 'img/strike.png' %}" width="70%"> </td>
             <td id="col2"> {{ result.strike }} </td>
             <td id="col3">
     {% for i in "x"|rjust:"4" %}
@@ -117,7 +168,7 @@
     </td></tr>
 
             <tr>
-                <td id="col1"> 볼 </td>
+                <td id="col1"> <img src="{% static 'img/ball.png' %}" width="70%"> </td>
                 <td id="col2"> {{ result.ball }} </td>
                 <td id="col3">
     {% for i in "x"|rjust:"4" %}
@@ -130,7 +181,7 @@
     </td></tr>
 
             <tr>
-                <td id="col1"> 아웃 </td>
+                <td id="col1"> <img src="{% static 'img/out.png' %}" width="70%"> </td>
                 <td id="col2"> {{ result.out }} </td>
                 <td id="col3">
     {% for i in "x"|rjust:"4" %}
@@ -153,7 +204,7 @@
         <form method="POST" action="{% url 'play_baseball' %}">
             {% csrf_token %}
             <br>
-            <label for="guess">숫자 4개를 입력하세요:</label>
+            <label for="guess">숫자 4개를 입력하세요</label>
             <input type="text" name="guess" id="guess" maxlength="4" pattern="[0-9]{4}" required oninput="checkDuplicate()">
             <div id="warning"></div>
             <input type="submit" value="제출">
