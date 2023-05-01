@@ -9,7 +9,6 @@
             background-color: #818cb7;
             color: #fff;
             text-align: center;
-
             }
 
         h1 {
@@ -31,6 +30,11 @@
         #list li {
             display: block;
             }
+
+        #board {
+	        background: transparent url("/static/img/back.gif") no-repeat center top ;
+	        background-size : 750px;
+        }
 
         #scoreboard {
             display: flex;
@@ -91,9 +95,10 @@
 
 {% block explain_contents %}
 
+<div id="board" >
+<br>
+<br>
 <h1 > 야구 전광판 </h1>
-
-<div id="board">
     <br> {{ result.count }}회
     <br> [{{ result.number }}]
 
@@ -143,7 +148,6 @@
 <!-- table화 -->
 
 
-</div>
 
     <div id="form">
         <form method="POST" action="{% url 'play_baseball' %}">
@@ -156,7 +160,12 @@
             <input type="button" onclick="location.href='{% url 'baseball:game' %}'" value="초기화">
         </form>
     </div>
-
+<br>
+<br>
+<br>
+<br>
+<br>
+</div>
 {% if result.result == "홈런!" %}
     <div id="scoreboard_">
     <p>{{ result.result }}</p>

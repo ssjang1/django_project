@@ -28,12 +28,20 @@
   <a href="/"><img src="{% static 'img/logo.png' %}" alt="이미지" width="360" align="left"></a>
 
   <ul class="navbar-nav ">
+    <div style="margin-left: 100px;">
     <li class="nav-item">
-      <a class="nav-link text-white" href="{% url 'baseball:game' %}">게임</a>
+      <a href="{% url 'baseball:game' %}">
+        <img src="{% static 'img/GamePlay btn.png' %}" alt="게임" width="150">
+      </a>
     </li>
+    </div>
+    <div style="margin-left: 100px;">
     <li class="nav-item">
-      <a class="nav-link text-white" href="{% url 'baseball:rank' %}">랭킹</a>
+      <a href="{% url 'baseball:rank' %}">
+        <img src="{% static 'img/Ranking btn.png' %}" alt="랭킹" width="150">
+      </a>
     </li>
+    </div>
   </ul>
   <ul class="nav nav-pills ml-auto">
       <li class="nav-item" >
