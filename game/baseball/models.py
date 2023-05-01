@@ -9,8 +9,10 @@ class Guess(models.Model):
     number = models.CharField(max_length =4)
     result = models.CharField(max_length =20)
 
+        # 클래스 안에 메서드 형태로 입력!!!#
     def __str__(self):
-        return self.userid
+        return f'[{self.pk}] {self.userid}'
+        # pk는 각 레코드에 대한 고유의 값 + 플레이한 userid
     @property
     def number(self):
         return self.number
