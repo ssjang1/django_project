@@ -1,0 +1,112 @@
+{% extends "base_menu.html" %}
+{% load static %}
+{% block explain_contents %}
+    <div class="container">
+			<header>
+        <img src="{% static 'img/ranktitle.png' %}" width="40%">
+			</header>
+			<div class="wrapper">
+				<table>
+					<thead>
+						<tr>
+							<th width="13%">랭킹</th>
+							<th width="25%">이름</th>
+							<th width="13%">횟수</th>
+                            <th width="55%">플레이시간</th>
+						</tr>
+					</thead>
+					<tbody>
+                    {% for rank in object_list|slice:":5" %}
+                    <tr>
+                        <td class="rank" align="center">{{ forloop.counter }}</td>
+                        <td class="team"> {{ rank.userid.username }} </td>
+                        <td class="points" align="center"> {{ rank.count }} </td>
+                        <td class="up-down"> {{ rank.success_date }} </td>
+                    </tr>
+                    {% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+    <style>
+        body {
+            font-family: 'Lato', Arial, sans-serif;
+            color: #000000;
+            background: #818cb7;
+        }
+
+        .container > header {
+            margin: 0 auto;
+            padding: 1em;
+            text-align: center;
+        }
+
+        .container > header h1 {
+          font-weight: 600;
+            font-size: 3em;
+            margin: 0;
+        }
+
+        .wrapper {
+            line-height: 1.5em;
+            margin: 0 auto;
+            padding: 2em 0 3em;
+            width: 90%;
+            max-width: 2000px;
+            overflow: hidden;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            background: #fff;
+        }
+
+        table, td, th {
+        border: 1px solid #000000;
+        border-color : rgba(129, 140, 183, 0.2);
+
+        }
+
+        th {
+            background-color: #59679a;
+            font-weight: bold;
+            color: #fff;
+            white-space: nowrap;
+
+        }
+
+        td, th {
+            padding: 1em 1.5em;
+            text-align: center;
+        }
+
+        tbody th {
+            background-color: #2ea879;
+        }
+
+        /* 랭크 내에서 색깔 먹이기 */
+        tbody tr{
+            color : #000000;
+
+        }
+
+        tbody tr:nth-child(2n-1) {
+            background-color: #f5f5f5;
+            transition: all .125s ease-in-out;
+        }
+
+        tbody tr:hover {
+            background-color: rgba(50,98,149,.3);
+
+        }
+        td.rank {
+            text-transform: capitalize;
+            text-align: center;
+        }
+
+
+
+    </style>
+{% endblock explain_contents %}

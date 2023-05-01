@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html lang="ko">
+<head>
+    <title> 숫자 야구 </title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 50px;
+            }
+
+        h1 {
+            margin-bottom: 0;
+            }
+        h2 {
+            margin-top: 0;
+            }
+
+        #list {
+            display: flex;
+            align-items : center;
+            justify-content: center;
+            text-align : center;
+            margin-top: 50px;
+            font-weight: bold;
+            }
+
+        #list li {
+            display: block;
+            }
+
+        #scoreboard {
+            display: flex;
+            align-items : center;
+            justify-content: center;
+            text-align : center;
+            margin-top: 50px;
+            font-weight: bold;
+            }
+
+        #scoreboard span {
+            width: 100px;
+            text-align: center;
+            }
+
+        #scoreboard_ {
+            display: flex;
+            align-items : center;
+            justify-content: center;
+            text-align : center;
+            margin-top: 50px;
+            font-weight: bold;
+
+            }
+        #scoreboard_ span {
+            width: 100px;
+            text-align: center;
+            }
+
+        #form{
+            text-align:center;
+            }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            }
+
+        th {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+            background-color: #f2f2f2;
+            }
+
+        #col1 {
+            width: 15%;
+        }
+        #col2 {
+            width: 10%;
+        }
+        #col3 {
+            display: flex;
+            justify-content: left;
+            width: 30%;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<h1> 야구 전광판 </h1>
+
+{% if result %}
+{% if result.result == "홈런!" %}
+    <div id="scoreboard_">
+    <p>{{ result.result }}</p>
+    </div>
+
+{% else %}
+    <div id="scoreboard">
+<!--        <br> {{ result.count }}회-->
+<!--        <br> [{{ result.number }}]-->
+<!--        <br> 스트라이크 : {{ result.strike }}-->
+<!--        <br> 볼 : {{ result.ball }}-->
+<!--        <br> 아웃 : {{ result.out }}-->
+    </div>
+{% endif %}
+{% endif %}
+
+
+<div id="board">
+    <br> {{ result.count }}회
+    <br> [{{ result.number }}]
+    <br>
+
+    <table class="show_board">
+        <tr>
+            <td id="col1"> 스트라이크 </td>
+            <td id="col2"> {{ result.strike }} </td>
+            <td id="col3">
+    <div id="strike_gre">
+    {% for i in "x"|rjust:"3" %}
+    {% if  forloop.counter  <= result.strike %}
+        <img src="{% static 'img/gre.png' %}" width="50" height="50">
+    {% else %}
+        <img src="{% static 'img/bla.png' %}" width="50" height="50">
+        {% endif %}
+    {% endfor %}
+    </div></td></tr>
+
+            <tr>
+                <td id="col1"> 볼 </td>
+                <td id="col2"> {{ result.ball }} </td>
+                <td id="col3">
+    <div id="ball_yel">
+    {% for i in "x"|rjust:"4" %}
+    {% if  forloop.counter  <= result.ball %}
+        <img src="{% static 'img/yel.png' %}" width="50" height="50">
+    {% else %}
+        <img src="{% static 'img/bla.png' %}" width="50" height="50">
+        {% endif %}
+    {% endfor %}
+    </div></td></tr>
+
+            <tr>
+                <td id="col1"> 아웃 </td>
+                <td id="col2"> {{ result.out }} </td>
+                <td id="col3">
+    <div id="out_red">
+    {% for i in "x"|rjust:"4" %}
+        {% if  forloop.counter  <= result.out %}
+        <img src="{% static 'img/red.png' %}" width="50" height="50">
+    {% else %}
+        <img src="{% static 'img/bla.png' %}" width="50" height="50">
+        {% endif %}
+    {% endfor %}
+    </div></td></tr>
+
+        </tr>
+    </table>
+
+<!-- table화 -->
+
+
+</div>
+
+    <div id="form">
+        <form method="POST" action="{% url 'play_baseball' %}">
+            {% csrf_token %}
+            <br>
+            <label for="guess">숫자 4개를 입력하세요:</label>
+            <input type="text" name="guess" id="guess" maxlength="4" pattern="[0-9]{4}" required oninput="checkDuplicate()">
+            <div id="warning"></div>
+            <input type="submit" value="제출">
+            <button type="button" onclick="location.href='{% url 'play_baseball' %}'">초기화</button>
+        </form>
+    </div>
+
+
+{% if guess_results %}
+
+    <div id="list">
+        <ul>
+            {% for result in guess_results %}
+        <!--<br>-->
+            {{ result }}
+
+            {% endfor %}
+        </ul>
+    </div>
+
+{% endif %}
+
+</body>
+
+<footer>
+
+</footer>
+</html>
+
+<script>
+function checkDuplicate() {
+  var input = document.getElementById("guess");
+  var value = input.value;
+  var warning = document.getElementById("warning");
+
+  for (var i = 0; i < value.length; i++) {
+    if (!/\d/.test(value[i])) {
+      warning.textContent = "숫자만 입력하세요.";
+      input.setCustomValidity("숫자만 입력하세요.");
+      return;
+    }
+    if (value.indexOf(value[i]) !== value.lastIndexOf(value[i])) {
+      warning.textContent = "중복된 숫자를 입력할 수 없습니다.";
+      input.setCustomValidity("중복된 숫자를 입력할 수 없습니다.");
+      return;
+    }
+  }
+  warning.textContent = "";
+  input.setCustomValidity("");
+}
+
+</script>
