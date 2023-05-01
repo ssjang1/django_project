@@ -153,7 +153,7 @@
             <input type="text" name="guess" id="guess" maxlength="4" pattern="[0-9]{4}" required oninput="checkDuplicate()">
             <div id="warning"></div>
             <input type="submit" value="제출">
-            <button type="button" onclick="location.href='{% url 'baseball:game' %}'">초기화</button>
+            <input type="button" onclick="location.href='{% url 'baseball:game' %}'" value="초기화">
         </form>
     </div>
 
