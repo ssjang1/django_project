@@ -1,0 +1,9 @@
+phh1621@ubuntu-20230418:~$ ls
+django_project  myenv
+phh1621@ubuntu-20230418:~$ cd django_project
+phh1621@ubuntu-20230418:~/django_project$ ls
+README.md  game  requirements.txt
+phh1621@ubuntu-20230418:~/django_project$ cd game
+phh1621@ubuntu-20230418:~/django_project/game$ ls
+baseball  config  db.sqlite3  manage.py  static  templates  venv
+phh1621@ubuntu-20230418:~/django_project/game$ python3 manage.py runserver
